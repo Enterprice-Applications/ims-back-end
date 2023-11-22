@@ -4,9 +4,9 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lk.ijse.dep11.ims.to.CourseTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,19 +22,32 @@ public class CourseHttpController {
         config.setUsername("root");
         config.setPassword("1995");
         config.setJdbcUrl("jdbc:mysql://localhost:3306/dep11_ims");
-        config.setDriverClassName("com.mysql.jdbc.driver");
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.addDataSourceProperty("maximumPoolSize",10);
         pool = new HikariDataSource(config);
 
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json",consumes = "application/json")
-    public String createCourse(@RequestBody  CourseTO course){
-        return "Post Mapping";
+    public CourseTO createCourse(@RequestBody  CourseTO courses){
+        try(Connection connection = pool.getConnection()){
+           PreparedStatement stm=  connection.prepareStatement("INSERT INTO course(name, duration_in_moth) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1, courses.getName());
+            stm.setInt(2, courses.getDuration_in_moth());
+            stm.executeUpdate();
+            ResultSet generatedKeys = stm.getGeneratedKeys();
+            generatedKeys.next();
+            int id = generatedKeys.getInt(1);
+            courses.setId(id);
+            return courses;
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PatchMapping(value = "/{CourseId}",consumes = "application/json")
-    public void updateCourse(@PathVariable int CourseId, @RequestBody CourseTO course){
+    public void updateCourse(@PathVariable int CourseId, @RequestBody CourseTO courses){
         System.out.println("Patch mapping");
     }
 
