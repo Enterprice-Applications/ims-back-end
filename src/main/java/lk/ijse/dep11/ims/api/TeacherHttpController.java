@@ -32,6 +32,7 @@ public class TeacherHttpController {
     @PreDestroy
     public void destroy(){
         pool.close();
+
     }
 
 
