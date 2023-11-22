@@ -14,6 +14,9 @@ public class CourseTO implements Serializable {
     private String name;
     private Integer duration_in_moth;
 
-    public class Create {
+    public interface Create {
+    }
+
+    public interface Update {
     }
 }
