@@ -14,12 +14,12 @@ import java.util.List;
 public class CourseHttpController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json",consumes = "application/json")
-    public CourseTO createCourse(@RequestBody @Validated(CourseTO.Create.class) CourseTO course){
+    public CourseTO createCourse(@RequestBody  CourseTO course){
         return course;
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{CourseId}",consumes = "application/json")
-    public void updateCourse(@PathVariable ("CourseId ") @RequestBody @Validated(CourseTO.Update.class) CourseTO course){
+    public void updateCourse(@PathVariable ("CourseId ") @RequestBody CourseTO course){
         System.out.println("Post Mapping");
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
