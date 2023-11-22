@@ -22,7 +22,7 @@ public class TeacherHttpController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value ="/{teacherId}", consumes = "application/json")
-    public void updateTeacher(@PathVariable("teacherId") String teacherID,
+    public void updateTeacher(@PathVariable("teacherId") int teacherID,
                               @RequestBody @Validated TeacherTO teacherUpdate){
         System.out.println("update Teacher");
     }
