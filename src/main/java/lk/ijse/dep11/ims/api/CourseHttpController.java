@@ -14,14 +14,15 @@ import java.util.List;
 public class CourseHttpController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json",consumes = "application/json")
-    public CourseTO createCourse(@RequestBody  CourseTO course){
-        return course;
+    public String createCourse(@RequestBody  CourseTO course){
+        return "Post Mapping";
     }
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+
     @PatchMapping(value = "/{CourseId}",consumes = "application/json")
-    public void updateCourse(@PathVariable ("CourseId ") @RequestBody CourseTO course){
-        System.out.println("Post Mapping");
+    public void updateCourse(@PathVariable int CourseId, @RequestBody CourseTO course){
+        System.out.println("Patch mapping");
     }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{CourseId}")
     public void deleteCourse(@PathVariable int CourseId){
@@ -31,7 +32,6 @@ public class CourseHttpController {
     public CourseTO getCoursetDetails(){
         System.out.println("Get Mapping");
         return null;
-
     }
 
     @GetMapping(produces = "application/json")
